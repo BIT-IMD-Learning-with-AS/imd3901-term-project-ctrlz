@@ -11,7 +11,7 @@ including instructions for running your project.
 
 ## Team Members and Roles ##
 
-- _Team Member 1_
+- _Christmas Pranommit_
   - Role 
   - Link to portfolio
 - _Team Member 2_

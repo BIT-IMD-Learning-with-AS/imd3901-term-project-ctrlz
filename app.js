@@ -9,7 +9,7 @@ const ABS_STATIC_PATH   = __dirname + '/public';
 
 //set up our route(s)
 app.get('/', function (req, res) {
-    res.sendFile('index.html', {root:ABS_STATIC_PATH});
+    res.sendFile('Cave.html', {root:ABS_STATIC_PATH});
 });
 
 server.listen(LISTEN_PORT);                         //starts server

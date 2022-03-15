@@ -4,11 +4,16 @@
       <title>The Sacred Meeting Place</title>
       <meta name="description" content="The Sacred Meeting Place">
       <script src="/js/aframe.min.js"></script>
-      <script src="/js/aframe-environment-component.min.js"></script>
+      <!--<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>-->
+      <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/deprecated/Geometry.js"></script>
+      <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+      <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+      <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
+      <!--<script src="/js/aframe-environment-component.min.js"></script>-->
       <script src="js/circles-sphere-env-map.js"></script>
       <script src="js/cave-pictographs.js"></script>
       <script src="js/player.js"></script>
-      
+      <script type="module" src="js/owl.js"></script>
         
       <!-- need a user gesture to allow sound on some browsers i.e. iOS -->
       <link rel="stylesheet" href="/css/user-gesture.css">
@@ -44,18 +49,23 @@
         </div>
       </div>
       
-    <a-scene start-experience renderer="colorManagement:true; physicallyCorrectLights: true;">
+    <a-scene physics="debug: true" start-experience renderer="colorManagement:true; physicallyCorrectLights: true;">
         <a-assets timeout="10000">
-            <audio id="space_music" src="/assets/SpaceMusic.mp3" preload="auto" crossorigin="anonymous"></audio>
+            <audio id="space_music" src="/assets/SpaceMusic.mp3"></audio>
 
             <!--Cave downloaded asset-->
-            <a-asset-item id="cave_model" response-type="arraybuffer" src="/assets/carriere_orleans_1/scene.gltf"></a-asset-item>
+            <!--<a-asset-item id="cave_model" response-type="arraybuffer" src="/assets/carriere_orleans_1/scene.gltf"></a-asset-item>-->
+            <a-mixin id="environment">
+              <a-asset-item id="cave_model" response-type="arraybuffer" src="/assets/cave.glb"></a-asset-item>
+            </a-mixin>
+
+            <!--<a-asset-item id="cave_model" response-type="arraybuffer" src="/assets/cave.glb"></a-asset-item>-->
             <a-asset-item id="pictograph_model" response-type="arraybuffer" src="/assets/mars.glb"></a-asset-item>
             <img id="sky_map" src="assets/086_hdrmaps_com_free_above_clouds.jpg" crossorigin="anonymous">
         </a-assets>
 
         <a-entity id="camera-rig" rotation = "0 -90 0"> 
-          <a-entity id = "player"  camera wasd-controls look-controls position = "23 8 34">
+          <a-entity id = "player"  camera wasd-controls look-controls position = "23 10 34">
              <a-box id="player-box" player-component></a-box>
              <a-entity cursor="rayOrigin:mouse;" raycaster="far:20; interval:200; objects:.interactive"></a-entity>
              <a-entity light="type:spot; intensity:1.4; castShadow:true; shadowBias:-0.0005; angle:40; penumbra:0.3;" position="0.5 -0.5 0" rotation="0 0 0"></a-entity>
@@ -65,16 +75,25 @@
         <!-- we will start autoplay music after a user-gesture. see js in <head> -->
         <a-entity class="ambient-music" sound="src:#space_music; autoplay:false;"></a-entity>
         
-        <a-entity id="cave" position="0 4 0" rotation="0 0 0" scale="1 1 1"
-                gltf-model="#cave_model" shadow circles-sphere-env-map="src:#sky_map;"></a-entity>
+        <a-entity id="cave" mixin="environment" position="0 4 0" rotation="0 0 0" scale="1 1 1"
+                gltf-model="#cave_model" shadow ></a-entity>
+        
 
         <a-entity id="sky" geometry="primitive:sphere; radius:300;" material="src:#sky_map; shader:flat; side:back;"></a-entity>
 
-        <a-entity id="thunderbird-pictograph" class="pictograph interactive" transport-to-link="url: Thunderbird.html" scale="1 1 1" position="10 8 0" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
-        <a-entity id="pakallak-tyme-pictograph" class="pictograph interactive" transport-to-link="url: PakallakTyme.html" scale="1 1 1" position="15 8 0" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
-        <a-entity id="naming-ceremony-pictograph" class="pictograph interactive" transport-to-link="url: NamingCeremony.html" scale="1 1 1" position="20 8 0" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
-        <a-entity id="beaver-pictograph" class="pictograph interactive" transport-to-link="url: BeaverTail.html" scale="1 1 1" position="25 8 0" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
-        <a-entity id="medicine-wheel-pictograph" class="pictograph interactive" transport-to-link="url: MedicineWheel.html" scale="1 1 1" position="30 8 0" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
+        <a-entity id="thunderbird-pictograph" class="pictograph interactive" transport-to-link="url: Thunderbird.html" scale="1 1 1" position="-39 8 -9" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
+        <a-entity id="pakallak-tyme-pictograph" class="pictograph interactive" transport-to-link="url: PakallakTyme.html" scale="1 1 1" position="-30 8 -58" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
+        <a-entity id="naming-ceremony-pictograph" class="pictograph interactive" transport-to-link="url: NamingCeremony.html" scale="1 1 1" position="34 8 -46" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
+        <a-entity id="beaver-pictograph" class="pictograph interactive" transport-to-link="url: BeaverTail.html" scale="1 1 1" position="42 8 -19" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
+        <a-entity id="medicine-wheel-pictograph" class="pictograph interactive" transport-to-link="url: MedicineWheel.html" scale="1 1 1" position="10 8 40" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
+
+        <a-entity id="owl" owl-component scale="1 1 1" position="0 12 10" gltf-model="#pictograph_model" circles-sphere-env-map="src:#sky_map;" shadow></a-entity>
+        
+        <!--<a-sphere id = "ball1" body="type: dynamic;" position="35 10 0" ></a-sphere>
+        
+        <a-box body="type: dynamic;" position="35 10 4" width="1" height="1" depth="1"></a-box>-->
+        <!--<a-box body="type: static;" position="0 6 0" width=100 height=0.1 depth=100 visible="true"></a-box>-->
+        
         <a-entity environment="preset:starry"></a-entity>
       </a-scene>
     </body>

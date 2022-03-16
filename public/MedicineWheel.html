@@ -161,11 +161,12 @@
               if(this.data.delay_current_disappear == this.data.delay_disappear){
                 this.data.delay_current_disappear = 0
                 thunder_array = document.querySelectorAll('.thunder')
-                console.log('thunder' + thunder_array.length)
-              if(thunder_array.length != 0 && thunder_array.length != 1){
-                console.log('remove')
-                thunder_temp.remove()
-              }
+                if(Object.values(thunder_temp)[2] != ''){
+                    if(thunder_array.length != 0){
+                      console.log('thunder' + Object.values(thunder_temp))
+                    thunder_temp.remove()
+                  }
+                  }
               
               }
 

@@ -73,9 +73,10 @@ AFRAME.registerComponent('owl-component', {
     else {
       for (let i = 0; i < visitedStories.length; i++){
         if (visitedStories[i] === "false"){
-          if (distance < 15) {
+          if (distance < 10) {
             owl.setAttribute('animation', {property:'position', to: positions[i].x + " " + 12 + " " + positions[i].z, easing:'linear', dur: 4000, enabled: true});
             //console.log(name[i] + " " + visitedStories[i])
+            owl.object3D.lookAt(positions[i])
             break;
          }
         }

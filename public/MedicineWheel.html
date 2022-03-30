@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Hello, WebXR! - A-Frame</title>
+      <title>MedicineWheel</title>
       <meta name="description" content="Hello, WebVR! - A-Frame">
       <script src="/js/aframe.min.js"></script>
       <!-- Packgage : Interaction -->
@@ -39,13 +39,13 @@
                   // event listener for the enity attached 
                   this.el.addEventListener('click',function(){
                   
+                  //remove other environment
+                  CONTEXT_AF.resetEnvironment(CONTEXT_AF.data.section)
+                  // CONTEXT_AF.data.active = true
                   
-                  if(CONTEXT_AF.data.active){
-                    CONTEXT_AF.data.active = false
-                  }else{
-                    CONTEXT_AF.data.active = true
-                    
-                  }
+                  
+                  CONTEXT_AF.data.active = true
+                  
                   CONTEXT_AF.data.delay_current_appear = 0; 
                   CONTEXT_AF.data.delay_current_disappear = 0;
                   CONTEXT_AF.data.delay_appear = 5;
@@ -72,6 +72,18 @@
               },
               resetEnvironment: function(currentSection){
                 
+                let environment = document.querySelector('#wheel').children
+                environmentLength = environment.length
+                // console.log('MM'+Object.values(environment[0].getAttribute('wheel-events')))
+                for(let i = 0; i<environment.length; i++){ 
+                  console.log(environment[i])
+                  console.log('MM'+Object.values(environment[i].getAttribute('wheel-events')))
+                  thisSection = Object.values(environment[i].getAttribute('wheel-events'))
+                  if(thisSection != currentSection){
+                    environment[i].setAttribute('wheel-events', {active: false})
+                  }
+                  
+                }
                 
               },
               
@@ -222,6 +234,10 @@
                     let strom = document.querySelector('#strom')
                     strom.setAttribute('rotation', {x: 0, y: this.data.strom_rotate, z: 0})
                 }
+                // else{
+                //     let strom = document.querySelector('#strom')
+                //     strom.setAttribute('visible', false)
+                // }
                 
               }
                 
@@ -291,7 +307,7 @@ scale = "-3 3 3"
                                     material = "color: #FFF71C"
                                     event-set__enter = "_event : mouseenter; material.color : #C4BE18"
                                     event-set__leave = "_event : mouseleave; material.color : #FFF71C"
-                                    wheel-events = 'section: east-thunder'></a-entity>
+                                    wheel-events = 'section: east-thunder; active : false'></a-entity>
                           <a-entity geometry = "primitive : circle;
                                                 radius: 1.9;
                                                 thetaStart: 180;
@@ -300,7 +316,7 @@ scale = "-3 3 3"
                                     material = "color: #FF0000"
                                     event-set__enter = "_event : mouseenter; material.color : #B00000"
                                     event-set__leave = "_event : mouseleave; material.color : #FF0000"
-                                    wheel-events = 'section: south-strom'></a-entity>
+                                    wheel-events = 'section: south-strom; active: false'></a-entity>
                           <a-entity geometry = "primitive : circle;
                                                 radius: 1.9;
                                                 thetaStart: 270;
@@ -309,7 +325,7 @@ scale = "-3 3 3"
                                     material = "color: #000000"
                                     event-set__enter = "_event : mouseenter; material.color : #0D0D0D"
                                     event-set__leave = "_event : mouseleave; material.color : #000000"
-                                    wheel-events = ''></a-entity>></a-entity>
+                                    wheel-events = 'section: west-sunny; active: false'></a-entity>></a-entity>
 </a-entity>
 <!-- end : ground -->
 <!-- cloud -->

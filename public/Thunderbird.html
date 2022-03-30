@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>ThunderBird</title>
+      <meta name="description" content="ThunderBird">
+      <script src="/js/aframe.min.js"></script>
+      <script src="js/aframe-environment-component.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+    </head>
+    <body>
+      <a-scene renderer="colorManagement:true; physicallyCorrectLights:true;">
+<!--Asset Models-->
+        <a-assets>
+          <a-asset-item id="bird_model" response-type="arraybuffer" src="assets/bird_01.glb"></a-asset-item>
+          <a-asset-item id="fish_model" response-type="arraybuffer" src="assets/fish.glb"></a-asset-item>
+      </a-assets>
+
+        <a-entity position="0 0 2" wasd-controls look-controls > 
+          <a-entity camera = "active: true" position="0 15 10" id = "cam">
+            <a-entity cursor="rayOrigin:mouse;" raycaster="far:50; interval:200; objects:.interactive;"></a-entity>
+<!--Bird Model Interactive-->
+            <a-entity class="button interactive" id="bird" position = "0 0 -2" rotation = "0 -90 0" scale = "0.3 0.3 0.3" gltf-model="#bird_model" animation-mixer = "timeScale:0.4" change></a-entity>
+          </a-entity>
+          </a-entity>
+
+<!--Scene set Settings-->
+      <a-entity id = "skyScene" environment="skyType: gradient; skyColor: #5c1658; fog:0.90; horizonColor: #e87f58; ground: hills; groundTexture: walkernoise; groundColor: #413a70; groundColor2: #a964bd; dressing: none; dressingAmount: 150; dressingColor: #e1f20f; dressingScale:1;" ></a-entity>
+      </a-scene>
+
+      <script>
+        AFRAME.registerComponent('change',{
+    //properties
+    init : function(){
+
+        const CONTEXT_AF = this;
+        const scene = document.querySelector('#skyScene');
+        CONTEXT_AF.el.addEventListener('click',function(){
+            console.log('changedcolor');
+            scene.setAttribute('environment', "skyColor: #1f3c7a");
+            scene.setAttribute('environment', "horizonColor: #963686");
+        });
+    }
+})
+      </script>
+    </body>
+</html>

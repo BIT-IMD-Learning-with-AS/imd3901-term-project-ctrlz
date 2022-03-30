@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Pakallak Thyme</title>
+      <meta name="description" content="pakallak">
+      <script src="/js/aframe.min.js"></script>
+      <script src="js/aframe-environment-component.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    </head>
+    <body>
+      <a-scene renderer="colorManagement:true; physicallyCorrectLights:true;">
+<!--Models Load-->
+        <a-assets>
+          <a-asset-item id="hole_model" response-type="arraybuffer" src="assets/iceholeFinal.glb"></a-asset-item>
+          <a-asset-item id="mount_model" response-type="arraybuffer" src="assets/snowmountain.glb"></a-asset-item>
+          <a-asset-item id="pole_model" response-type="arraybuffer" src="assets/pole.glb"></a-asset-item>
+          <a-asset-item id="fish_model" response-type="arraybuffer" src="assets/fish.glb"></a-asset-item>
+      </a-assets>
+<!--Camera-->      
+        <a-entity position="0 0 5" wasd-controls look-controls > 
+          <a-entity camera = "active: true" position="0 5 10" id = "cam">
+            <a-entity cursor="rayOrigin:mouse;" raycaster="far:50; interval:200; objects:.interactive;"></a-entity>
+<!--Fishing Pole-->
+            <a-entity class="button interactive" id="pole" position = "1.5 -2 -3" rotation = "0 -80 10" scale = "2 2 2" gltf-model="#pole_model" ></a-entity>
+          </a-entity>
+        </a-entity>
+
+        <a-entity class="button interactive" id="mount" position = "10 -3 -20" rotation = "-1 127 0" scale = "1 1 1" gltf-model="#mount_model"></a-entity>
+        <a-entity class="button interactive" id="mount" position = "-15 -10 -70" rotation = "-1 138 -1" scale = "1 1 1" gltf-model="#mount_model"></a-entity>
+        <a-entity class="button interactive" id="hole" position = "0 0 0" rotation = "0 0 0" scale = "1 1 1" gltf-model="#hole_model"></a-entity>
+<!--Fish Models-->        
+        <a-entity class="button interactive" id="fish" position = "1 4 0" rotation = "0 0 75" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity>
+        <a-entity class="button interactive" id="fish" position = "-5 -3 0" rotation = "0 0 0" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity>
+        <a-entity class="button interactive" id="fish" position = "-2 -3 3" rotation = "0 0 0" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity>
+      <a-entity environment="skyType: gradient; skyColor: #f5c595; fog:0.80; horizonColor:#62bdde; ground: hills; groundTexture: none; groundColor: #abdbc1; dressing: none; dressingAmount: 150; dressingColor: #e1f20f; dressingScale:1;" ></a-entity>
+      </a-scene>
+    </body>
+</html>

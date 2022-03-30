@@ -1,0 +1,258 @@
+{
+    "asset": {
+        "copyright": "2020 (c) Adobe Inc.",
+        "generator": "Adobe Dimension - 3de52ae4ccc0c25be48106335282fae5a6a58dee",
+        "version": "2.0"
+    },
+    "accessors": [
+        {
+            "bufferView": 0,
+            "componentType": 5126,
+            "count": 648,
+            "type": "VEC3",
+            "max": [
+                0.5920479893684387,
+                1.2087810039520264,
+                0.562608003616333
+            ],
+            "min": [
+                -0.6645879745483398,
+                -1.000635027885437,
+                -0.6388189792633057
+            ]
+        },
+        {
+            "bufferView": 1,
+            "componentType": 5126,
+            "count": 648,
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 2,
+            "componentType": 5126,
+            "count": 648,
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 3,
+            "componentType": 5125,
+            "count": 972,
+            "type": "SCALAR",
+            "max": [
+                647.0
+            ],
+            "min": [
+                0.0
+            ]
+        }
+    ],
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteOffset": 0,
+            "byteLength": 7776,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 7776,
+            "byteLength": 7776,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 15552,
+            "byteLength": 5184,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 20736,
+            "byteLength": 3888,
+            "target": 34963
+        }
+    ],
+    "buffers": [
+        {
+            "byteLength": 24624,
+            "uri": "tornado_binary.bin"
+        }
+    ],
+    "cameras": [
+        {
+            "perspective": {
+                "znear": 0.0000562283858016599,
+                "yfov": 0.6024156808853149,
+                "zfar": 3.0925612449645998,
+                "aspectRatio": 1.3333333730697632
+            },
+            "type": "perspective",
+            "name": "render_camera"
+        }
+    ],
+    "images": [
+        {
+            "name": "roughness",
+            "uri": "tornado_images/roughness.png",
+            "mimeType": "image/png"
+        },
+        {
+            "name": "ice_normal",
+            "uri": "tornado_images/ice_normal.png",
+            "mimeType": "image/png"
+        }
+    ],
+    "materials": [
+        {
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.25
+                ],
+                "metallicFactor": 0.0,
+                "metallicRoughnessTexture": {
+                    "index": 0
+                }
+            },
+            "normalTexture": {
+                "index": 1
+            },
+            "alphaMode": "BLEND",
+            "name": "Ice",
+            "doubleSided": true
+        }
+    ],
+    "meshes": [
+        {
+            "name": "Object_4",
+            "primitives": [
+                {
+                    "attributes": {
+                        "POSITION": 0,
+                        "NORMAL": 1,
+                        "TEXCOORD_0": 2
+                    },
+                    "indices": 3,
+                    "material": 0
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "translation": [
+                0.5362699627876282,
+                1.300634741783142,
+                0.5381054282188416
+            ],
+            "rotation": [
+                -0.12059047073125839,
+                0.379409521818161,
+                0.04995020851492882,
+                0.9159756302833557
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                0.9999999403953552
+            ],
+            "camera": 0,
+            "name": "render_camera_n3d"
+        },
+        {
+            "children": [
+                2
+            ],
+            "translation": [
+                0.036270007491111758,
+                1.000634789466858,
+                0.03810548782348633
+            ],
+            "name": "tornado_modified2"
+        },
+        {
+            "children": [
+                3
+            ],
+            "name": "scene"
+        },
+        {
+            "children": [
+                4
+            ],
+            "rotation": [
+                -0.7071067690849304,
+                0.0,
+                0.0,
+                0.7071068286895752
+            ],
+            "scale": [
+                1.0,
+                0.9999999403953552,
+                0.9999999403953552
+            ],
+            "name": "Sketchfab_model"
+        },
+        {
+            "children": [
+                5
+            ],
+            "name": "root"
+        },
+        {
+            "children": [
+                6
+            ],
+            "rotation": [
+                0.7071067690849304,
+                0.0,
+                0.0,
+                0.7071068286895752
+            ],
+            "scale": [
+                1.0,
+                0.9999999403953552,
+                0.9999999403953552
+            ],
+            "name": "GLTF_SceneRootNode"
+        },
+        {
+            "children": [
+                7
+            ],
+            "name": "node-0_0"
+        },
+        {
+            "mesh": 0,
+            "name": "Object_4"
+        }
+    ],
+    "samplers": [
+        {},
+        {}
+    ],
+    "scenes": [
+        {
+            "nodes": [
+                0,
+                1
+            ],
+            "name": "scene"
+        }
+    ],
+    "textures": [
+        {
+            "name": "roughness",
+            "sampler": 0,
+            "source": 0
+        },
+        {
+            "name": "tmp_image_pie_4f7a_360f_9419",
+            "sampler": 1,
+            "source": 1
+        }
+    ],
+    "scene": 0
+}

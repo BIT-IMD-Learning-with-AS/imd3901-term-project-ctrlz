@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Naming Ceremony</title>
+      <meta name="description" content="namingCeremony">
+      <script src="/js/aframe.min.js"></script>
+      <script src="js/aframe-environment-component.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    </head>
+    <body>
+      <a-scene renderer="colorManagement:true; physicallyCorrectLights:true;">
+<!--Model Asset-->        
+        <a-assets>
+          <a-asset-item id="man_model" response-type="arraybuffer" src="assets/human.glb"></a-asset-item>
+          <a-asset-item id="man1_model" response-type="arraybuffer" src="assets/ElderChanting.glb"></a-asset-item>
+          <a-asset-item id="man2_model" response-type="arraybuffer" src="assets/ElderClapping.glb"></a-asset-item>
+          <a-asset-item id="man3_model" response-type="arraybuffer" src="assets/ElderShaking.glb"></a-asset-item>
+          <a-asset-item id="beaver_model" response-type="arraybuffer" src="assets/beaver.glb"></a-asset-item>
+          <a-asset-item id="tipi_model" response-type="arraybuffer" src="assets/tipi.glb"></a-asset-item>
+          <a-asset-item id="spiritL_model" response-type="arraybuffer" src="assets/spiritLeaning.glb"></a-asset-item>
+          <a-asset-item id="spiritF_model" response-type="arraybuffer" src="assets/SpiritFloating.glb"></a-asset-item>
+      </a-assets>
+
+        <a-entity position="-2 0 2" wasd-controls look-controls > 
+          <a-entity camera = "active: true" position="0 3 10" id = "cam">
+            <a-entity cursor="rayOrigin:mouse;" raycaster="far:50; interval:200; objects:.interactive;"></a-entity>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+<!--Elder Interactive-->
+      <a-entity id="elder" position = "0 -0.8 -2" rotation = "0 -20 0">
+        <a-entity class="button interactive" id="elder"  scale = "1.6 1.6 1.6" gltf-model="#man3_model"animation-mixer show></a-entity>
+        <a-entity id = "info" text="value: In the tradition of Ojibwe people we have naming ceremonies that give each person in the community a spirit name.  
+                                          Traditionally, children have their first naming ceremony around the ages 5-10 and then they have their second naming
+                                          ceremony after going through puberty.;
+         color:white; font:roboto; width: 5; anchor:left; baseline:top; wrapCount:50;" position="-2 6 0.01" visible="false"></a-entity>
+      </a-entity>
+ <!--Tipi-->     
+      <a-entity class="button interactive" id="tipi" position = "0 0 -2" rotation = "0 -20 0" scale = "5.5 5.5 5.5" gltf-model="#tipi_model"></a-entity>
+ <!--Group of kids-->     
+      <a-entity id = "group" position = "0 0 -2" rotation = "0 -20 0" visible="false">
+        <a-entity class="button interactive" id="manClap2" position = "-2 -0.5 1" rotation = "0 45 0" scale = "1 1 1" gltf-model="#man2_model"animation-mixer></a-entity> 
+        <a-entity class="button interactive" id="manClap" position = "2 -0.5  1" rotation = "0 -45 0" scale = "1 1 1" gltf-model="#man2_model"animation-mixer></a-entity>
+        <a-entity class="button interactive" id="manChant" position = "-3 -0.5  3" rotation = "0 90 0" scale = "1 1 1" gltf-model="#man1_model"animation-mixer></a-entity> 
+        <a-entity class="button interactive" id="manChant2" position = "3 -0.5  3" rotation = "0 -90 0" scale = "1 1 1" gltf-model="#man1_model"animation-mixer></a-entity>
+      </a-entity>
+
+      <a-entity id = "sprits">
+        <a-entity class="button interactive" id="spiritL" position = "1 3 -2" rotation = "0 45 0" scale = "0.2 0.2 0.2 " gltf-model="#spiritL_model"animation-mixer></a-entity> 
+        <a-entity class="button interactive" id="spiritF" position = "-1 3 -2" rotation = "0 100 0" scale = "0.2 0.2 0.2 " gltf-model="#spiritF_model"animation-mixer></a-entity> 
+      </a-entity>
+<!--Environment-->
+      <a-entity environment="skyType: gradient; skyColor: #5abbcc; fog:0.90; horizonColor: #e87f58; ground: hills; groundTexture: walkernoise; groundColor: #32297d; groundColor2: #1f193b; dressing: trees; dressingAmount: 100; dressingColor: #5abbcc; dressingScale:1;" ></a-entity>
+      </a-scene>
+      <script>
+
+
+AFRAME.registerComponent('show',{
+
+    init : function(){
+        const CONTEXT_AF = this;
+        const txt = document.querySelector('#info');
+        const grp = document.querySelector('#group');
+        CONTEXT_AF.isVisible = false;
+
+        CONTEXT_AF.el.addEventListener('click',function(){
+
+          if(CONTEXT_AF.isVisible === false ){
+            txt.setAttribute('visible','true');   
+            grp.setAttribute('visible','true')
+            CONTEXT_AF.isVisible = true;
+          }
+          else{
+            txt.setAttribute('visible','false'); 
+            grp.setAttribute('visible','false')
+            CONTEXT_AF.isVisible = false;
+          }
+        })
+    }
+})
+      </script>
+    </body>
+</html>

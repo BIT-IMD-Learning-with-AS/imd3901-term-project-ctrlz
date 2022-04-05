@@ -23,6 +23,10 @@
               // constructor
               schema: {section: {type : 'string', default : "",
                         active: {type : 'boolean', default : false},
+                        rain_active:{type: 'boolean', default : false},
+                        thunder_active: {type: 'boolean', default: false},
+                        strom_active:{type: 'boolean', default: false},
+                        sunny_active: {type: 'boolean', default: false},
                         delay_appear: {type: 'number', default: 5},
                         delay_disappear: {type: 'number', default: 10},
                         delay_current_appear: {type: 'number', default: 0}, // delay before execute events
@@ -39,9 +43,8 @@
                   // event listener for the enity attached 
                   this.el.addEventListener('click',function(){
                   
-                  //remove other environment
-                  CONTEXT_AF.resetEnvironment(CONTEXT_AF.data.section)
-                  // CONTEXT_AF.data.active = true
+                  
+                  
                   
                   
                   CONTEXT_AF.data.active = true
@@ -54,37 +57,86 @@
                  
                   //call the function based on section click - determine by the attribute
                   if(CONTEXT_AF.data.section == "north-rain"){
+
+                    let rain_environment = document.querySelector('#wheel').children
+
+                    console.log(rain_environment)
+
+                    for(let i = 0;i< rain_environment.length; i++){
+                      rain_environment[i].setAttribute('wheel-events', {rain_active: true, thunder_active: false, strom_active :false, sunny_active: false})
+                    }
+
+                    //change the sky color
+
+                    let sky = document.querySelector('#sky')
+                    sky.setAttribute('src', '#rain-sky')
+
+                    // change ground color
+                    let ground = document.querySelector('#ground')
+                    ground.setAttribute('material', {color: '#131614'})
                     CONTEXT_AF.createRain(CONTEXT_AF);
                     
                   }
-                  if(CONTEXT_AF.data.section == 'east-thunder'){
+                  else if(CONTEXT_AF.data.section == 'east-thunder'){
                     //thunder event is delay 30
+                    let rain_environment = document.querySelector('#wheel').children
+
+                    for(let i = 0;i< rain_environment.length; i++){
+                      rain_environment[i].setAttribute('wheel-events', {rain_active: false, thunder_active: true, strom_active :false, sunny_active: false})
+                    }
+                    let sky = document.querySelector('#sky')
+                    sky.setAttribute('src', '#thunder-sky')
+
+                    // change ground color
+                    let ground = document.querySelector('#ground')
+                    ground.setAttribute('material', {color: '#131625'})
                   }
 
-                  if(CONTEXT_AF.data.section == 'south-strom'){
+                  else if(CONTEXT_AF.data.section == 'south-strom'){
+                    
+                    let rain_environment = document.querySelector('#wheel').children
 
+                    for(let i = 0;i< rain_environment.length; i++){
+                      rain_environment[i].setAttribute('wheel-events', {rain_active: false, thunder_active: false, strom_active :true, sunny_active: false})
+                    }
                     console.log('click strom')
-                    let strom = document.querySelector('#strom')
-                    strom.setAttribute('visible', true)
+
+                    // change sky color
+                    let sky = document.querySelector('#sky')
+                    sky.setAttribute('src', '#strom-sky')
+                    
+                     // change ground color
+                     let ground = document.querySelector('#ground')
+                    ground.setAttribute('material', {color: '#2e2636'})
                   }
                 
-                 })
-              },
-              resetEnvironment: function(currentSection){
-                
-                let environment = document.querySelector('#wheel').children
-                environmentLength = environment.length
-                // console.log('MM'+Object.values(environment[0].getAttribute('wheel-events')))
-                for(let i = 0; i<environment.length; i++){ 
-                  console.log(environment[i])
-                  console.log('MM'+Object.values(environment[i].getAttribute('wheel-events')))
-                  thisSection = Object.values(environment[i].getAttribute('wheel-events'))
-                  if(thisSection != currentSection){
-                    environment[i].setAttribute('wheel-events', {active: false})
+                  else if(CONTEXT_AF.data.section = 'west-sunny'){
+                    let rain_environment = document.querySelector('#wheel').children
+
+                    for(let i = 0;i< rain_environment.length; i++){
+                      rain_environment[i].setAttribute('wheel-events', {rain_active: false, thunder_active: false, strom_active :false, sunny_active: true})
+                    }
+
+                    // change sky color
+                    let sky = document.querySelector('#sky')
+                    sky.setAttribute('src', '#sunny-sky')
+
+                    // change ground color
+                    let ground = document.querySelector('#ground')
+                    ground.setAttribute('material', {color: '#9d672a'})
+
                   }
-                  
-                }
-                
+
+                  let strom = document.querySelector('#strom')
+                    // let isStrom = strom.getAttribute('visible')
+                     console.log(CONTEXT_AF.data.strom_active)
+                    if(CONTEXT_AF.data.strom_active){
+                      strom.setAttribute('visible', true)
+                    }else{
+                      strom.setAttribute('visible', false)
+                    }
+                 }
+                 )
               },
               
               createRain: function(CONTEXT_AF){
@@ -173,13 +225,13 @@
                 }
                 
                 //active when the north section is being click
-                if(this.data.active == true && this.data.section == 'north-rain'){
+                if(this.data.rain_active == true && this.data.section == 'north-rain'){
                     
                     this.createRain();
                 }
 
                 // active when the eastt section is being click
-                if(this.data.active == true && this.data.section == 'east-thunder'){
+                if(this.data.thunder_active == true && this.data.section == 'east-thunder'){
                   
                   //get random time tunder appear
                   
@@ -227,7 +279,7 @@
 
                 }
 
-                if(this.data.active == true && this.data.section == 'south-strom'){
+                if(this.data.strom_active == true && this.data.section == 'south-strom'){
                     if(this.data.strom_rotate >360){
                       this.data.strom_rotate = 0
                     }
@@ -238,6 +290,11 @@
                 //     let strom = document.querySelector('#strom')
                 //     strom.setAttribute('visible', false)
                 // }
+
+                // if(this.data.sunny_active == false){
+                //   let strom = document.querySelector('#strom')
+                //   strom.setAttribute('visible', false)
+                // }
                 
               }
                 
@@ -247,11 +304,17 @@
     <body>
       <a-scene  id = "scene"  physics="driver: ammo;"  >
       <a-assets>
-        <a-img id = "rain-sky" src = "assets/medicine-wheel/Dark-Sky-thunder.png"></a-img>
+        <!-- Sky -->
+        <a-img id = "rain-sky" src = "assets/medicine-wheel/Dark-Sky-rain.png"></a-img>
+        <a-img id = "thunder-sky" src = 'assets/medicine-wheel/Dark-Sky-thunder.png'></a-img>
+        <a-img id = 'sunny-sky' src = 'assets/medicine-wheel/Bright-Sky-Sunny.png'></a-img>
+        <a-img id = 'strom-sky' src = 'assets/medicine-wheel/Dark-Sky-strom.png'></a-img>
+        <!-- Ground -->
+        <a-img id = 'bright-ground'src = 'assets//medicine-wheel/Bright-Ground.png'></a-img>
         <a-asset-item id = 'cloud' src = "assets/clouds/scene.gltf"></a-asset-item>
         <a-asset-item id = 'lightning' src = 'assets/thunder/scene.gltf'></a-asset-item>
         <a-asset-item id = 'tornado' src = 'assets/medicine-wheel/tornado/tornado.gltf'></a-asset-item>
-        <!-- <a-asset-item id = 'rocks' src = 'assets/medicine-wheel/rocks_enviroment /rocks_enviroment.gltf'></a-asset-item> -->
+        <a-asset-item id = 'rocks' src = 'assets/medicine-wheel/lowpoly_forest/scene.gltf'></a-asset-item>
       </a-assets>
         <!-- Wall -->
         <a-entity geometry = "primitive: cylinder;
@@ -269,9 +332,10 @@ scale = "-3 3 3"
 >
 <!-- ground -->
 <a-entity   id = "ground"
+        src = '#bright-ground'
         geometry = "primitive : circle; 
                     radius : 50 "
-        material = "color: #2e2a41"
+        material = "color: #131614"
         position = "0 -1.5 0"
         rotation = "-90 0 0"
         shadow = 'receive: true'
@@ -282,7 +346,7 @@ scale = "-3 3 3"
                 geometry = "primitive: circle;
                             radius : 2"
                 material = "shader: standard;
-                            color : #5C5C5C"
+                            color : #66583f"
                 position = "0 0 0.1"
                 rotation = "0 0 45"
                             >
@@ -331,7 +395,8 @@ scale = "-3 3 3"
 <!-- cloud -->
 
 <a-entity gltf-model="#cloud" scale="0.5 0.5 0.5" position="37.06873 10 -44.44771" rotation="0 270 0"></a-entity>
-<a-entity gltf-model="#rocks" position="4.55028 -2 -0.53108" scale = '1 3 2'></a-entity>
+<a-entity gltf-model="#rocks" position = ' 3.4 -1.4 0' scale = '6 6 6'></a-entity>
+<a-entity gltf-model="#rocks" position = ' -17.8 -1.4 0' scale = '6 6 6'></a-entity>
 </a-entity>
 <!-- end wall -->
 <!-- thunder -->
@@ -348,13 +413,14 @@ scale = "-3 3 3"
 <a-entity gltf-model = '#tornado' id = 'strom' scale=" 100 100 100 " visible = 'false' position = '-5 -104 -2'></a-entity>
 <a-entity light="color: #16193e; type: ambient"></a-entity>
 <a-entity light="color: #ffffff; decay: 0.95; intensity: 0.65; type: point" visible="" position = '0 5 0 '></a-entity>
+<a-entity light="color: #b6d3cd; intensity: 1.1; type: hemisphere"></a-entity>
 
 <!-- camera and lighting  -->
 <a-entity>
 <a-entity camera position = '0 1.6 0' look-controls wasd-controls>
 <a-cursor id = 'cursor' raycaster material = "color:#4FFFE5"></a-cursor>
 </a-entity>
-<a-sky src = "#rain-sky" segments-height = '10'>
+<a-sky id = 'sky' src = "#rain-sky" segments-height = '10'>
 
 </a-sky>
 </a-entity>

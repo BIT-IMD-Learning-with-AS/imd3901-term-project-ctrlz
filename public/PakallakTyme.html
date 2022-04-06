@@ -6,9 +6,144 @@
       <script src="/js/aframe.min.js"></script>
       <script src="js/aframe-environment-component.min.js"></script>
       <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+      <!-- Packgage : Interaction -->
+      <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+      <!-- <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script> -->
     </head>
+
+    <script>
+      AFRAME.registerComponent('pole-interaction', {
+        schema: {
+          isUp: {type: 'boolean'},
+          isDrop:{type: 'boolean'},
+          isInteract:{type: 'boolean', default: false},
+          poleTipLocation:{type: 'vec3'},
+          currentFishLocation: {type: 'vec3'},
+
+        },
+
+        init: function(){
+          const CONTEXT_AF = this
+
+          //get fish location
+          let fish = document.querySelector('#fish1');
+            CONTEXT_AF.data.currentFishLocation = fish.getAttribute('position')
+
+          //get pole tip location
+          let poleTip = document.querySelector('#tip')
+          CONTEXT_AF.data.poleTipLocation= poleTip.getAttribute('position')
+            
+          //modified string rotation
+          let string = document.querySelector('#string')
+          let stringAngle = 1/(Math.tan(Math.abs(CONTEXT_AF.data.poleTipLocation.y )/ Math.abs(CONTEXT_AF.data.currentFishLocation.x)))
+          
+          console.log('string Angle' + stringAngle)
+          string.setAttribute('rotation', {z: stringAngle * -180/3.14})
+          string.setAttribute('scale', {x:0.01, y:2.6 ,z:0.01})
+         
+
+          CONTEXT_AF.el.addEventListener('click',function() {
+
+            // CONSOLE
+          // envent click
+            console.log('NOTIFY: CLICK THE POLE')
+
+            //click the pole
+            CONTEXT_AF.data.isInteract = true
+            
+            
+
+
+            if(CONTEXT_AF.data.isUp){
+              //function pull fish up
+
+              CONTEXT_AF.data.isUp = false
+            }
+            else{
+              //same function different parameter
+              CONTEXT_AF.data.isUp = true
+            }
+
+            if(CONTEXT_AF.data.isDrop){
+
+              //drop the fish
+            }
+          })
+        },
+
+
+        pullFish: function(){
+          console.log(this.data.currentFishLocation)
+          let fish = document.querySelector('#fish1');
+          fish.setAttribute('position', {x: this.data.currentFishLocation.x, y: this.data.currentFishLocation.y, z: this.data.currentFishLocation.z})
+          fish.setAttribute('rotation', {x: 0, x: 0, z:75})
+          
+        },
+        getString:function(){
+
+        },
+        tick: function(){
+          
+          let pullingRate = 0.01
+          //location change only when click on the pole
+          //change base on the tip on the pole
+          if(this.data.isInteract){
+            // this.data.currentFishLocation.y= this.data.currentFishLocation+0.1*(this.data.poleTipLocation.y- this.data.currentFishLocation)
+
+            //pull up y
+            //+4.9 is modfied it to be relative to the world 
+            if(this.data.currentFishLocation.y < this.data.poleTipLocation.y-0.3){
+              this.data.currentFishLocation.y+= pullingRate
+            }
+            // pull x
+            if(this.data.currentFishLocation.x < this.data.poleTipLocation.x){
+              this.data.currentFishLocation.x += pullingRate
+            }
+
+          
+
+            console.log('Pole tip location'+this.data.poleTipLocation.y)
+            console.log('Fish location' +this.data.currentFishLocation.x)  
+            //this.data.currentFishLocation.y += 0.01
+
+            //modified fish location
+          if(this.data.isUp){
+            
+            this.pullFish()
+            //shorten the string
+            let string = document.querySelector('#string')
+            stringScaleY = string.getAttribute('scale').y
+            if(stringScaleY > 0.3){
+              stringScaleY -= 0.015
+            }
+            string.setAttribute('scale', {x: 0.01, y:stringScaleY, z: 0.01})
+            stringLocationY = string.getAttribute('position').y
+            stringLocationX = string.getAttribute('position').x
+            if(stringLocationY < this.data.poleTipLocation.y -0.25){
+              stringLocationY += 0.005
+              stringLocationX +=0.005
+            }
+            string.setAttribute('position', {x:stringLocationX, y: stringLocationY, z: 0})
+          }else{
+            let fish = document.querySelector('#fish1')
+            fish.setAttribute('position', {x: -1.9, y: -0.1, z: 0})
+            fish.setAttribute('rotation', {x: 0, x: 0, z:-20})
+
+            let string = document.querySelector('#string')
+            string.setAttribute('scale', {x:0.01, y:2.5 ,z:0.01})
+            string.setAttribute('position',{x: -1.3, y: 0.9})
+
+          }
+          }
+          
+          
+        }
+
+      })
+
+    </script>
     <body>
-      <a-scene renderer="colorManagement:true; physicallyCorrectLights:true;">
+      <a-scene renderer="colorManagement:true; physicallyCorrectLights:true;" pole-interaction = 'isUp: false'>
 <!--Models Load-->
         <a-assets>
           <a-asset-item id="hole_model" response-type="arraybuffer" src="assets/iceholeFinal.glb"></a-asset-item>
@@ -20,8 +155,19 @@
         <a-entity position="0 0 5" wasd-controls look-controls > 
           <a-entity camera = "active: true" position="0 5 10" id = "cam">
             <a-entity cursor="rayOrigin:mouse;" raycaster="far:50; interval:200; objects:.interactive;"></a-entity>
+           
 <!--Fishing Pole-->
-            <a-entity class="button interactive" id="pole" position = "1.5 -2 -3" rotation = "0 -80 10" scale = "2 2 2" gltf-model="#pole_model" ></a-entity>
+            <a-entity class="button interactive" id="pole" position = "1.5 -2 -3" rotation = "0 -80 10" scale = "2 2 2" gltf-model="#pole_model"  
+           >
+           <a-entity id = 'tip' geometry = 'primitive: box' visible = false scale = " 0.2 0.2 0.2" position = '-0.5 1.9 0'></a-entity>
+
+           <!-- fish -->
+           <a-entity class="button interactive" id="fish1" position = "-1.9 -0.2 0" rotation = "0 0 75" scale = "0.7 0.7 0.7" gltf-model="#fish_model" animation-mixer></a-entity>
+
+           <!-- string -->
+
+           <a-entity id = 'string' geometry = 'primitive: cylinder' position  = '-1.3 0.9  0 ' scale = '0.01 2.6 0.01'></a-entity>
+          </a-entity>
           </a-entity>
         </a-entity>
 
@@ -29,9 +175,9 @@
         <a-entity class="button interactive" id="mount" position = "-15 -10 -70" rotation = "-1 138 -1" scale = "1 1 1" gltf-model="#mount_model"></a-entity>
         <a-entity class="button interactive" id="hole" position = "0 0 0" rotation = "0 0 0" scale = "1 1 1" gltf-model="#hole_model"></a-entity>
 <!--Fish Models-->        
-        <a-entity class="button interactive" id="fish" position = "1 4 0" rotation = "0 0 75" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity>
-        <a-entity class="button interactive" id="fish" position = "-5 -3 0" rotation = "0 0 0" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity>
-        <a-entity class="button interactive" id="fish" position = "-2 -3 3" rotation = "0 0 0" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity>
+        <!-- <a-entity class="button interactive" id="fish1" position = "1 4 0" rotation = "0 0 75" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity> -->
+        <a-entity class="button interactive" id="fish2" position = "-5 -3 0" rotation = "0 0 0" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity>
+        <a-entity class="button interactive" id="fish3" position = "-2 -3 3" rotation = "0 0 0" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity>
       <a-entity environment="skyType: gradient; skyColor: #f5c595; fog:0.80; horizonColor:#62bdde; ground: hills; groundTexture: none; groundColor: #abdbc1; dressing: none; dressingAmount: 150; dressingColor: #e1f20f; dressingScale:1;" ></a-entity>
       </a-scene>
     </body>

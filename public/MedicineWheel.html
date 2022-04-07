@@ -174,6 +174,7 @@
                   let thunder_temp = document.createElement('a-entity')
                   thunder_temp.setAttribute('class', 'thunder')
                   thunder_temp.setAttribute('gltf-model', '#lightning')
+                  thunder_temp.setAttribute('material', {roughnessMap: '#tornado_roughnessMap'})
                   thunder_position = this.getRandomLocation(5, 5);
                   thunder_temp.setAttribute('position', {x: thunder_position[0], y: thunder_position[1], z: thunder_position[2]})
                   thunder_temp.setAttribute('rotation', {x: 0, y: 0, z: -20})
@@ -307,8 +308,9 @@
         <!-- Ground -->
         <a-img id = 'bright-ground'src = 'assets//medicine-wheel/Bright-Ground.png'></a-img>
         <a-asset-item id = 'cloud' src = "assets/clouds/scene.gltf"></a-asset-item>
-        <a-asset-item id = 'lightning' src = 'assets/thunder/scene.gltf'></a-asset-item>
+        <a-asset-item id = 'lightning' src = 'assets/thunder/scene.gltf's></a-asset-item>
         <a-asset-item id = 'tornado' src = 'assets/medicine-wheel/tornado/tornado.gltf'></a-asset-item>
+        <a-asset-item id = 'tornado_roughnessMap' src ='assets/medicine-wheel/tornado/tornado_images/roughness.png'></a-asset-item>
         <a-asset-item id = 'rocks' src = 'assets/medicine-wheel/lowpoly_forest/scene.gltf'></a-asset-item>
       </a-assets>
         <!-- Wall -->

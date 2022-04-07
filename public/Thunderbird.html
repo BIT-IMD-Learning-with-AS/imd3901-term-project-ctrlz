@@ -13,6 +13,9 @@
     </head>
     <body>
       <a-scene id = 'scene' physics="driver: ammo;"renderer="colorManagement:true; physicallyCorrectLights:true;">
+        <!--Sound-->        
+        <audio id="song" src="assets/Thunderstorm.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <a-sound class="ambient-sound" sound="src:#song; autoplay:auto; volume:10"></a-sound>
 <!--Asset Models-->
         <a-assets>
           <a-asset-item id="bird_model" response-type="arraybuffer" src="assets/thunderBird.glb"></a-asset-item>
@@ -22,10 +25,10 @@
       </a-assets>
 
         <a-entity position="0 0 2" wasd-controls look-controls > 
-          <a-entity camera = "active: true" position="0 15 50" id = "cam">
+          <a-entity camera = "active: true" position="0 15 10" id = "cam">
             <a-entity cursor="rayOrigin:mouse;" raycaster="far:50; interval:200; objects:.interactive;"></a-entity>
 <!--Bird Model Interactive-->
-            <a-entity class="button interactive" id="bird" position = "0 0 -2" rotation = "0 -90 0" scale = "0.3 0.3 0.3" gltf-model="#bird_model" animation-mixer = "timeScale:0.4" change></a-entity>
+            <a-entity class="button interactive" id="bird" position = "0 0 -2" rotation = "0 -90 0" scale = "0.25 0.25 0.25" gltf-model="#bird_model" animation-mixer = "timeScale:0.4" change></a-entity>
           </a-entity>
           </a-entity>
 <!-- cloud model -->

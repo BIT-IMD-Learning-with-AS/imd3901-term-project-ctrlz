@@ -9,6 +9,9 @@
     </head>
     <body>
       <a-scene renderer="colorManagement:true; physicallyCorrectLights:true;">
+<!--Sound-->        
+        <audio id="song" src="assets/08-Maanda-Giizhigak-by-Swamp.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <a-sound class="ambient-sound" sound="src:#song; autoplay:auto;"></a-sound>
 <!--Model Asset-->        
         <a-assets>
           <a-asset-item id="man1_model" response-type="arraybuffer" src="assets/ElderChanting.glb"></a-asset-item>

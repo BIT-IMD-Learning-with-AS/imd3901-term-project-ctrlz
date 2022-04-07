@@ -6,41 +6,172 @@
       <script src="/js/aframe.min.js"></script>
       <script src="js/aframe-environment-component.min.js"></script>
       <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+      <script src="https://rawgit.com/takahirox/aframe-rain/master/build/aframe-rain.min.js"></script>
+      <script src="https://mixedreality.mozilla.org/ammo.js/builds/ammo.wasm.js"></script>
+      <script src="http://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
 
     </head>
     <body>
-      <a-scene renderer="colorManagement:true; physicallyCorrectLights:true;">
+      <a-scene id = 'scene' physics="driver: ammo;"renderer="colorManagement:true; physicallyCorrectLights:true;">
 <!--Asset Models-->
         <a-assets>
-          <a-asset-item id="bird_model" response-type="arraybuffer" src="assets/bird_01.glb"></a-asset-item>
+          <a-asset-item id="bird_model" response-type="arraybuffer" src="assets/thunderBird.glb"></a-asset-item>
           <a-asset-item id="fish_model" response-type="arraybuffer" src="assets/fish.glb"></a-asset-item>
+          <a-asset-item id ='cloud_model' response-type = 'arraybuffer' src = 'assets/thunderbird/rain/scene.gltf'></a-asset-item>
+          <a-asset-item id = 'lightning' src = 'assets/thunder/scene.gltf's></a-asset-item>
       </a-assets>
 
         <a-entity position="0 0 2" wasd-controls look-controls > 
-          <a-entity camera = "active: true" position="0 15 10" id = "cam">
+          <a-entity camera = "active: true" position="0 15 50" id = "cam">
             <a-entity cursor="rayOrigin:mouse;" raycaster="far:50; interval:200; objects:.interactive;"></a-entity>
 <!--Bird Model Interactive-->
             <a-entity class="button interactive" id="bird" position = "0 0 -2" rotation = "0 -90 0" scale = "0.3 0.3 0.3" gltf-model="#bird_model" animation-mixer = "timeScale:0.4" change></a-entity>
           </a-entity>
           </a-entity>
-
+<!-- cloud model -->
+          <a-entity gltf-model = '#cloud_model' scale = '0.1 0.1 0.1' position = '0 17 0'></a-entity>
+          <a-entity gltf-model="assets/thunderbird/rain/scene.gltf" scale="0.1 0.1 0.1" position="8.75537 4.3524 21.05128"></a-entity>
+          <a-entity gltf-model="assets/thunderbird/rain/scene.gltf" scale="0.1 0.1 0.1" position="15.08514 13 -52.83236"></a-entity>
+          <a-entity gltf-model="assets/thunderbird/rain/scene.gltf" scale="0.1 0.1 0.1" position="-62.24253 11.6113 -99.34277"></a-entity>
+          <a-entity gltf-model="assets/thunderbird/rain/scene.gltf" scale="0.1 0.1 0.1" position="-87.14925 13.54612 30.86735"></a-entity>
+          <a-entity gltf-model="assets/thunderbird/rain/scene.gltf" scale="0.1 0.1 0.1" position="-49.67088 23.62569 30.86735"></a-entity>
+          <a-entity gltf-model="assets/thunderbird/rain/scene.gltf" scale="0.1 0.1 0.1" position="-62.24253 11.6113 -99.34277"></a-entity>
+          <a-entity gltf-model="assets/thunderbird/rain/scene.gltf" scale="0.1 0.1 0.1" position="-11.53625 6.96223 55.59815"></a-entity>
+          <a-entity gltf-model="assets/thunderbird/rain/scene.gltf" scale="0.1 0.1 0.1" position="30.67881 6.96223 37.16084"></a-entity>
+          
 <!--Scene set Settings-->
       <a-entity id = "skyScene" environment="skyType: gradient; skyColor: #5c1658; fog:0.90; horizonColor: #e87f58; ground: hills; groundTexture: walkernoise; groundColor: #413a70; groundColor2: #a964bd; dressing: none; dressingAmount: 150; dressingColor: #e1f20f; dressingScale:1;" ></a-entity>
       </a-scene>
 
       <script>
         AFRAME.registerComponent('change',{
+
+          schema: {
+            delay_appear: {type: 'number', default: 7},
+                        delay_disappear: {type: 'number', default: 12},
+                        delay_current_appear: {type: 'number', default: 0}, // delay before execute events
+                        delay_current_disappear: {type: 'number', default: 0},
+          },
     //properties
     init : function(){
 
+      
         const CONTEXT_AF = this;
+
+        // environment
         const scene = document.querySelector('#skyScene');
         CONTEXT_AF.el.addEventListener('click',function(){
             console.log('changedcolor');
             scene.setAttribute('environment', "skyColor: #1f3c7a");
             scene.setAttribute('environment', "horizonColor: #963686");
         });
-    }
+
+        
+
+    },
+
+    createRain: function(CONTEXT_AF){
+                let environment = document.querySelector('#scene');
+                  
+                  //create rain entity
+                   let rain_temp = document.createElement('a-entity');
+
+                   //set attribute
+                   rain_temp.setAttribute('geometry', {primitive : 'cylinder', radius : 0.04, height : 0.5});
+                   rain_temp.setAttribute('material', {color : '#ffc2ca'})
+                   rain_temp.setAttribute('ammo-body', {type : 'dynamic'});
+                   rain_position = this.getRandomLocation(150, 150);
+                   rain_temp.setAttribute('position',{x: rain_position[0], y:rain_position[1], z: rain_position[2]} );
+
+                  //attached rain entity to the DOM
+                   environment.appendChild(rain_temp);
+    },
+    // Funtion determine location of the rain/thunder
+      getRandomLocation : function(floor_width,floor_depth){
+       const height = 3 ; //meter
+       x_coordinate = (Math.random() * floor_width) - floor_width/2;
+       y_coordinate = (Math.random() * 20) + 1;
+      z_coordinate = (Math.random() * floor_depth) - floor_depth/2;
+
+      //this.data.location =  [x_coordinate, y_coordinate,z_coordinate]
+      return [x_coordinate,y_coordinate,z_coordinate]
+              
+      },
+
+      createThunder: function(){
+                  let environment = document.querySelector('#scene');
+                  
+
+                  let thunder_temp = document.createElement('a-entity')
+                  thunder_temp.setAttribute('class', 'thunder')
+                  thunder_temp.setAttribute('gltf-model', '#lightning')
+                  thunder_temp.setAttribute('material', {roughnessMap: '#tornado_roughnessMap'})
+                  thunder_position = this.getRandomLocation(100, 100);
+                  thunder_temp.setAttribute('position', {x: thunder_position[0], y: thunder_position[1], z: thunder_position[2]})
+                  thunder_temp.setAttribute('rotation', {x: 0, y: 0, z: -20})
+                  let thunderLength = this.getThunderLength(10)
+                  thunder_temp.setAttribute('scale', {x: 0.5, y: thunderLength, y: 0.5})
+
+                  environment.appendChild(thunder_temp);
+                  
+                  return thunder_temp
+              },
+
+              getThunderLength: function(length){
+                  let max_length = 10 * length
+                  let min_length = 5*length
+                  newHeight = (Math.random() * max_length) + min_length
+                  console.log('New Thunder Length' + newHeight)
+                 
+                  return newHeight
+              },
+              getRandomDelayTime: function(interval_start, interval_end){
+                return Math.floor((Math.random() * interval_end) + interval_start);
+                
+              },
+
+      tick: function(){
+
+        //rain
+        this.createRain()
+
+        this.data.delay_current_appear++;
+        this.data.delay_current_disappear++;
+        //thunder
+        //delay for certain amount and the the thunder appear
+                  if(this.data.delay_current_appear == this.data.delay_appear){
+
+                    console.log('Thunder Appear');
+                    this.data.delay_current_appear= 0;
+                    this.data.delay_appear = this.getRandomDelayTime(60,100);
+
+                    this.createThunder();
+                    thunder_temp= document.querySelector('.thunder')
+                    //if thunder exist
+                    if(thunder_temp != null){
+                    
+
+                    currentGeo = thunder_temp.getAttribute('scale')
+                    if(JSON.stringify(currentGeo) != null){
+                        thunder_height = this.getThunderLength(Object.values(currentGeo)[1])
+                        thunder_temp.setAttribute('scale', {x: 20, y: thunder_height, z:20})
+                    }
+
+                     }
+                  }
+                  
+                  if(this.data.delay_current_disappear == this.data.delay_disappear){
+                    this.data.delay_current_disappear = 0
+                    thunder_array = document.querySelectorAll('.thunder')
+                    
+                  if(Object.values(thunder_temp)[2] != ''){
+                    if(thunder_array.length != 0){
+                      console.log('thunder' + Object.values(thunder_temp))
+                    thunder_temp.remove()
+                  }
+                  }
+                  }
+      }
 })
       </script>
     </body>

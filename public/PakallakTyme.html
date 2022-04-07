@@ -144,6 +144,9 @@
     </script>
     <body>
       <a-scene renderer="colorManagement:true; physicallyCorrectLights:true;" pole-interaction = 'isUp: false'>
+        <!--Sound-->        
+        <audio id="song" src="assets/Fish-Song.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <a-sound class="ambient-sound" sound="src:#song; autoplay:auto;"></a-sound>
 <!--Models Load-->
         <a-assets>
           <a-asset-item id="hole_model" response-type="arraybuffer" src="assets/iceholeFinal.glb"></a-asset-item>
@@ -155,6 +158,8 @@
         <a-entity position="0 0 5" wasd-controls look-controls > 
           <a-entity camera = "active: true" position="0 5 10" id = "cam">
             <a-entity cursor="rayOrigin:mouse;" raycaster="far:50; interval:200; objects:.interactive;"></a-entity>
+            <a-entity id = "info" text="value: 'Press the Ice Hole to return to the cave';
+            color:white; font:roboto; width: 5; anchor:left; baseline:top; wrapCount:50;" position="5 3.5 -5" visible="true"></a-entity>
            
 <!--Fishing Pole-->
             <a-entity class="button interactive" id="pole" position = "1.5 -2 -3" rotation = "0 -80 10" scale = "2 2 2" gltf-model="#pole_model"  
@@ -173,7 +178,7 @@
 
         <a-entity class="button interactive" id="mount" position = "10 -3 -20" rotation = "-1 127 0" scale = "1 1 1" gltf-model="#mount_model"></a-entity>
         <a-entity class="button interactive" id="mount" position = "-15 -10 -70" rotation = "-1 138 -1" scale = "1 1 1" gltf-model="#mount_model"></a-entity>
-        <a-entity class="button interactive" id="hole" position = "0 0 0" rotation = "0 0 0" scale = "1 1 1" gltf-model="#hole_model"></a-entity>
+        <a-entity class="button interactive" id="hole" position = "0 0 0" rotation = "0 0 0" scale = "1 1 1" gltf-model="#hole_model" onclick="parent.location='Cave.html'"></a-entity>
 <!--Fish Models-->        
         <!-- <a-entity class="button interactive" id="fish1" position = "1 4 0" rotation = "0 0 75" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity> -->
         <a-entity class="button interactive" id="fish2" position = "-5 -3 0" rotation = "0 0 0" scale = "2 2 2" gltf-model="#fish_model" animation-mixer></a-entity>

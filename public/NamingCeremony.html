@@ -21,6 +21,7 @@
           <a-asset-item id="spiritL_model" response-type="arraybuffer" src="assets/spiritLeaning.glb"></a-asset-item>
           <a-asset-item id="spiritF_model" response-type="arraybuffer" src="assets/SpiritFloating.glb"></a-asset-item>
           <a-asset-item id="rock_model" response-type="arraybuffer" src="assets/rock_pakallak.glb"></a-asset-item>
+          <a-asset-item id="fire_model" response-type="arraybuffer" src="assets/fire.glb"></a-asset-item>
       </a-assets>
 
         <a-entity position="-2 0 2" wasd-controls look-controls > 
@@ -42,6 +43,9 @@
  <!--Tipi-->     
       <a-entity class="button interactive" id="tipi" position = "0 0 -2" rotation = "0 -20 0" scale = "5.5 5.5 5.5" gltf-model="#tipi_model"></a-entity>
       <a-entity class="button interactive" id="rock" position = "-8 0 6" rotation = "0 100 0" scale = "1 1 1" gltf-model="#rock_model" onclick="parent.location='Cave.html'"></a-entity>
+
+<!--fire-->
+      <a-entity class="button interactive" id="fire" position = "-1 0 1" rotation = "0 0 0" scale = "1 1 1" gltf-model="#fire_model" animation-mixer></a-entity>
  <!--Group of kids-->     
       <a-entity id = "group" position = "0 0 -2" rotation = "0 -20 0" visible="false">
         <a-entity class="button interactive" id="manClap2" position = "-2 -0.5 1" rotation = "0 45 0" scale = "1 1 1" gltf-model="#man2_model"animation-mixer></a-entity> 

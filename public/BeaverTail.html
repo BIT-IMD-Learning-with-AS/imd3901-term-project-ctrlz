@@ -9,7 +9,7 @@
       <script src="/js/aframe-environment-component.min.js"></script>
       <script src="js/circles-sphere-env-map.js"></script>
       <script src="js/wisp.js"></script>
-      
+      <script src="js/beaverTailExit.js"></script>
         
       <!-- need a user gesture to allow sound on some browsers i.e. iOS -->
       <!--<link rel="stylesheet" href="/css/user-gesture.css">
@@ -56,13 +56,14 @@
             <a-asset-item id="scene1_model" response-type="arraybuffer" src="/assets/BeaverScene1Trees.glb"></a-asset-item>
             <a-asset-item id="scene2_model" response-type="arraybuffer" src="/assets/DamFlooded.glb"></a-asset-item>
             <a-asset-item id="scene3_model" response-type="arraybuffer" src="/assets/DamHouse.glb"></a-asset-item>
+            <a-asset-item id="beaverPictograph_model" response-type="arraybuffer" src="/assets/rock_beaver.glb"></a-asset-item>
             <img id="sky_map" src="assets/086_hdrmaps_com_free_above_clouds.jpg" crossorigin="anonymous">
         </a-assets>
 
         <a-entity id="camera-rig" rotation = "0 -90 0"> 
           <a-entity id = "player"  camera wasd-controls look-controls position = "0 2 0">
              <!--<a-box id="player-box"></a-box>-->
-             <!--<a-entity cursor="rayOrigin:mouse;" raycaster="far:20; interval:200; objects:.interactive"></a-entity>
+             <a-entity cursor="rayOrigin:mouse;" raycaster="far:20; interval:200; objects:.interactive"></a-entity>
              <!--<a-entity light="type:spot; intensity:1.4; castShadow:true; shadowBias:-0.0005; angle:40; penumbra:0.3;" position="0.5 -0.5 0" rotation="0 0 0"></a-entity>-->
           </a-entity>
         </a-entity>
@@ -79,8 +80,10 @@
         <a-entity id="scene3" scale="0.5 0.5 0.5" position="-90 -0.4 50" gltf-model="#scene3_model" shadow></a-entity>
         <a-entity id="beaver3" scale="5 5 5" position="-95.72 0.9 56.2" rotation="0 90 0" gltf-model="#beaver_model" shadow></a-entity>
         <a-entity id="muskrat" scale="5 5 5" position="-95.72 0.9 53.83" rotation="0 -90 0" gltf-model="#muskrat_model" shadow></a-entity>
-
+        
         <a-entity id="sky" geometry="primitive:sphere; radius:300;" material="src:#sky_map; shader:flat; side:back;"></a-entity>
+        
+        <a-entity id="beaver-pictograph" class="pictograph interactive" transport-to-link="url: Cave.html" scale="3 3 3" position="1 0 1" rotation = "0 90 0" gltf-model="#beaverPictograph_model" shadow></a-entity>
 
         <a-entity environment="skyType: gradient; skyColor: #cff4ff; fog:0.90; horizonColor:  #8497ae; ground: flat; groundColor: #c9ffd8; groundColor2: #c9ffd8; groundTexture: walkernoise; dressingColor:#ffdb99; preset:forest"></a-entity>
       </a-scene>

@@ -70,6 +70,20 @@
                     let ground = document.querySelector('#ground')
                     ground.setAttribute('material', {color: '#131614'})
                     CONTEXT_AF.createRain(CONTEXT_AF);
+
+
+                    //play rain sound
+                    let sound = document.querySelector('a-sound')
+                    if(sound){
+                      sound.remove()
+                    }
+                    
+                    let environment = document.querySelector('#scene');
+                    let rainSound = document.createElement('a-sound');
+                    rainSound.setAttribute('class', 'whether-sound')
+                    rainSound.setAttribute('sound', {src: '#rain-sound', autoplay: 'auto', loop: true})
+                    environment.appendChild(rainSound)
+
                     
                   }
                   else if(CONTEXT_AF.data.section == 'east-thunder'){
@@ -81,10 +95,25 @@
                     }
                     let sky = document.querySelector('#sky')
                     sky.setAttribute('src', '#thunder-sky')
+                    
+                    
 
                     // change ground color
                     let ground = document.querySelector('#ground')
                     ground.setAttribute('material', {color: '#131625'})
+
+                    //play thunder sounds
+                    let sound = document.querySelector('a-sound')
+                    if(sound){
+                      sound.remove()
+                    }
+                    
+                    let environment = document.querySelector('#scene');
+                    let thunderSound = document.createElement('a-sound');
+                    thunderSound.setAttribute('class', 'whether-sound')
+                    thunderSound.setAttribute('sound', {src: '#thunder-sound', autoplay: 'auto', loop: true, volume: 3})
+                    environment.appendChild(thunderSound)
+
                   }
 
                   else if(CONTEXT_AF.data.section == 'south-strom'){
@@ -103,6 +132,18 @@
                      // change ground color
                      let ground = document.querySelector('#ground')
                     ground.setAttribute('material', {color: '#2e2636'})
+
+                    //play rain sound
+                    let sound = document.querySelector('a-sound')
+                    if(sound){
+                      sound.remove()
+                    }
+                    
+                    let environment = document.querySelector('#scene');
+                    let stromSound = document.createElement('a-sound');
+                    stromSound.setAttribute('class', 'whether-sound')
+                    stromSound.setAttribute('sound', {src: '#strom-sound', autoplay: 'auto', loop: true, volume: 6})
+                    environment.appendChild(stromSound)
                   }
                 
                   else if(CONTEXT_AF.data.section = 'west-sunny'){
@@ -119,6 +160,18 @@
                     // change ground color
                     let ground = document.querySelector('#ground')
                     ground.setAttribute('material', {color: '#9d672a'})
+
+                    //play sunny sound
+                    let sound = document.querySelector('a-sound')
+                    if(sound){
+                      sound.remove()
+                    }
+                    
+                    let environment = document.querySelector('#scene');
+                    let sunnySound = document.createElement('a-sound');
+                    sunnySound.setAttribute('class', 'whether-sound')
+                    sunnySound.setAttribute('sound', {src: '#sunny-sound', autoplay: 'auto', loop: true, volume: 10})
+                    environment.appendChild(sunnySound)
 
                   }
 
@@ -238,20 +291,13 @@
                     this.data.delay_current_appear= 0;
                     this.data.delay_appear = this.getRandomDelayTime(60,100);
 
+                    //create thunder
                     this.createThunder();
+
                     thunder_temp= document.querySelector('.thunder')
+
                     //if thunder exist
                     if(thunder_temp != null){
-                    //   //get html of the thunder entity
-                    //   currentGeo = thunder_temp.getAttribute('geometry')
-                    //   if(JSON.stringify(currentGeo) != null){
-                    //     // get height attribute value
-                    //     console.log('Cylinder Height: ' + Object.values(currentGeo)[1]) // 1 being the height
-                    //     thundereight = this.getThunderLength(Object.values(currentGeo)[1])
-                    //     thunder_temp.setAttribute('geometry',{height: this.getThunderLength(Object.values(currentGeo)[1])} )
-                        
-                    //   }
-
                     currentGeo = thunder_temp.getAttribute('scale')
                     if(JSON.stringify(currentGeo) != null){
                         thunder_height = this.getThunderLength(Object.values(currentGeo)[1])
@@ -282,15 +328,6 @@
                     let strom = document.querySelector('#strom')
                     strom.setAttribute('rotation', {x: 0, y: this.data.strom_rotate, z: 0})
                 }
-                // else{
-                //     let strom = document.querySelector('#strom')
-                //     strom.setAttribute('visible', false)
-                // }
-
-                // if(this.data.sunny_active == false){
-                //   let strom = document.querySelector('#strom')
-                //   strom.setAttribute('visible', false)
-                // }
                 
               }
                 
@@ -313,6 +350,11 @@
         <a-asset-item id = 'tornado_roughnessMap' src ='assets/medicine-wheel/tornado/tornado_images/roughness.png'></a-asset-item>
         <a-asset-item id = 'rocks' src = 'assets/medicine-wheel/lowpoly_forest/scene.gltf'></a-asset-item>
       </a-assets>
+      <!-- audio -->
+      <audio id = 'rain-sound'src="assets/medicine-wheel/audio/rain.mp3"></audio>
+      <audio id = 'thunder-sound'src="assets/medicine-wheel/audio/thunder.mp3"></audio>
+      <audio id = 'strom-sound'src="assets/medicine-wheel/audio/tornado.mp3"></audio>
+      <audio id = 'sunny-sound'src="assets/medicine-wheel/audio/sunny.mp3"></audio>
         <!-- Wall -->
         <a-entity geometry = "primitive: cylinder;
         radius: 10;
@@ -418,8 +460,8 @@ scale = "-3 3 3"
 <a-cursor id = 'cursor' raycaster material = "color:#4FFFE5"></a-cursor>
 </a-entity>
 <a-sky id = 'sky' src = "#rain-sky" segments-height = '10'>
-
 </a-sky>
+
 </a-entity>
      </a-scene>
     </body>

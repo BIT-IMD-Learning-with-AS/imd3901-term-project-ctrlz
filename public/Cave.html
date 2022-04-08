@@ -45,7 +45,7 @@
       <!-- https://developers.google.com/web/updates/2017/09/autoplay-policy-changes (fun memes on webpage;) -->
       <div id="user-gesture-overlay">
         <div class="center">
-          <button id="user-gesture-button" onclick="startExperience();">Enter experience</button>
+          <button id="user-gesture-button" onclick="startExperience();">The Sacred Meeting Place</button>
         </div>
       </div>
       
@@ -100,7 +100,7 @@
         <a-box body="type: dynamic;" position="35 10 4" width="1" height="1" depth="1"></a-box>-->
         <!--<a-box body="type: static;" position="0 6 0" width=100 height=0.1 depth=100 visible="true"></a-box>-->
         
-        <a-entity environment="preset:starry"></a-entity>
+        <a-entity id = "skyScene" environment="skyType: gradient; skyColor: #07ad94; fog:0.5; horizonColor: #e87f58;" ></a-entity>
       </a-scene>
     </body>
 </html>

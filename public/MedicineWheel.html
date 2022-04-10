@@ -337,6 +337,7 @@
     <body>
       <a-scene  id = "scene"  physics="driver: ammo;"  >
       <a-assets>
+        <a-asset-item id="rock_model" response-type="arraybuffer" src="assets/rock_wheel.glb"></a-asset-item>
         <!-- Sky -->
         <a-img id = "rain-sky" src = "assets/medicine-wheel/Dark-Sky-rain.png"></a-img>
         <a-img id = "thunder-sky" src = 'assets/medicine-wheel/Dark-Sky-thunder.png'></a-img>
@@ -370,6 +371,7 @@ scale = "-3 3 3"
 
 >
 <!-- ground -->
+<a-entity class="button interactive" id="rock" position = "-3 -1.5 -2" rotation = "0 150 0" scale = "1 1 1" gltf-model="#rock_model" onclick="parent.location='Cave.html'"></a-entity>
 <a-entity   id = "ground"
         src = '#bright-ground'
         geometry = "primitive : circle; 
@@ -458,6 +460,9 @@ scale = "-3 3 3"
 <a-entity>
 <a-entity camera position = '0 1.6 0' look-controls wasd-controls>
 <a-cursor id = 'cursor' raycaster material = "color:#4FFFE5"></a-cursor>
+<a-entity text="value: 'Press the rock to return to the cave';
+color:white; font:roboto; width: 5; anchor:left; baseline:top; wrapCount:50;" position="4 3.5 -5" ></a-entity>
+
 </a-entity>
 <a-sky id = 'sky' src = "#rain-sky" segments-height = '10'>
 </a-sky>

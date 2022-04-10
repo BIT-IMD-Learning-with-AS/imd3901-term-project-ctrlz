@@ -22,11 +22,11 @@ AFRAME.registerComponent('owl-component', {
     localStorage.setItem('hasVisitedBeaver', false);
     localStorage.setItem('hasVisitedMedicine', false);*/
 
-    console.log(localStorage.getItem('hasVisitedThunderbird'))
+    /*console.log(localStorage.getItem('hasVisitedThunderbird'))
     console.log(localStorage.getItem('hasVisitedPakallak'))
     console.log(localStorage.getItem('hasVisitedNaming'))
     console.log(localStorage.getItem('hasVisitedBeaver'))
-    console.log(localStorage.getItem('hasVisitedMedicine'))
+    console.log(localStorage.getItem('hasVisitedMedicine'))*/
     
 
     //Context_AF.owl.setAttribute('animation', {property:'position', to: thunderbirdPos.x + " " + 12 + " " + thunderbirdPos.z, easing:'linear', enabled: true});

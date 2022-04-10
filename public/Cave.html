@@ -79,7 +79,7 @@
         </a-entity>
                 
         <!-- we will start autoplay music after a user-gesture. see js in <head> -->
-        <a-entity class="ambient-music" sound="src:#space_music; volume: 7 autoplay:true;"></a-entity>
+        <a-entity class="ambient-music" sound="src:#space_music; volume: 7 autoplay:false; loop: true;"></a-entity>
         
         <a-entity id="cave" mixin="environment" position="0 4 0" rotation="0 0 0" scale="1 1 1"
                 gltf-model="#cave_model" shadow ></a-entity>
